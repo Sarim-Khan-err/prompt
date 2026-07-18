@@ -520,7 +520,17 @@ export default function Home() {
         }),
       });
 
-      const data = await response.json();
+      const text = await response.text();
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        throw new Error(
+          response.status === 413
+            ? "Payload too large. Try a shorter video or fewer frames."
+            : `Server returned an unexpected response (status ${response.status}). The video may be too large — try a shorter clip.`,
+        );
+      }
 
       if (!data.ok) {
         throw new Error(data.error?.message ?? "Analysis failed.");

@@ -2,7 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { ANALYSIS_SYSTEM_PROMPT, buildUserMessage } from "@/lib/prompt-template";
 import { emptyResult, type AnalysisResult } from "@/lib/analysis-types";
 
-export const runtime = "edge";
+// Node.js runtime — Edge runtime has a ~4MB body limit that can't handle
+// multiple base64-encoded video frames. Node runtime supports larger payloads.
+export const runtime = "nodejs";
+export const maxDuration = 60;
 
 export async function POST(request: NextRequest) {
   try {

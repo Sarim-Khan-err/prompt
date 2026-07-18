@@ -3,10 +3,10 @@
  * Extracts key frames from video, resizes images — all in the browser.
  */
 
-const MAX_DIM = 768;
-const THUMBNAIL_SIZE = 256;
-const JPEG_QUALITY = 0.72;
-const MAX_FRAMES = 6;
+const MAX_DIM = 512;
+const THUMBNAIL_SIZE = 192;
+const JPEG_QUALITY = 0.6;
+const MAX_FRAMES = 4;
 
 export interface ProcessedMedia {
   frames: string[]; // base64 data URLs
