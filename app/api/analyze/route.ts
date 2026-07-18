@@ -59,9 +59,10 @@ export async function POST(request: NextRequest) {
       let errMessage = `API returned ${response.status}`;
       try {
         const errJson = JSON.parse(errText);
-        errMessage = errJson.error?.message || errMessage;
+        // Handle different error formats: OpenAI, Gemini, and others
+        errMessage = errJson.error?.message || errJson.message || errJson.error?.details?.[0]?.reason || errText.slice(0, 300) || errMessage;
       } catch {
-        if (errText.length < 200) errMessage = errText;
+        errMessage = errText.slice(0, 300) || errMessage;
       }
       return NextResponse.json(
         { ok: false, error: { code: "api_error", message: errMessage } },
